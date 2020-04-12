@@ -1,12 +1,11 @@
 import {Point} from './Point'
+import {InvalidParamsError } from './InvalidParamsError'
 
 class Manhattan {
 
-  constructor() {}
-
   public manhattanDistance(point1: Point, point2: Point): number {
     if( point1 == null || point2 == null)
-      throw new Error('Invalid params')
+      throw new InvalidParamsError
     return point1.distanceFrom(point2)
   }
 
