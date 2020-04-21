@@ -1,8 +1,0 @@
-
-class TennisScoring {
-
-}
-
-export {
-  TennisScoring
-}
