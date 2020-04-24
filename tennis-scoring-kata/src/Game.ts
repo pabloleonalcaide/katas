@@ -1,11 +1,8 @@
 import { Player } from "./Player"
-import { InvalidPlayerException } from './InvalidPlayerException'
-import { CompletedGameException } from "./CompletedGameException";
 
 class Game {
   private player1: Player;
   private player2: Player;
-  private completed: boolean;
   private winner: Player;
   private deucePlayer: Player;
   private MAX_POINT = 40;
@@ -13,19 +10,11 @@ class Game {
   constructor(player1: Player, player2: Player){
     this.player1 = player1;
     this.player2 = player2;
-    this.completed = false;
   }
 
-  public isCompleted():boolean {
-    return this.completed;
-  }
-
-  public scoreForPlayer(player: number):void{
-    this.ensureIncompleteGame();
-    switch (player) {
-      case 1: this.scorePoints(this.player1);break;
-      case 2: this.scorePoints(this.player2);break;
-      default: throw new InvalidPlayerException("Only players 1 or 2 availables"); break;
+  public scoreForPlayer(playerNumber: 1|2):void{
+    if(this.winner == undefined){
+      playerNumber == 1 ? this.scorePoints(this.player1) : this.scorePoints(this.player2);
     }
   }
 
@@ -39,7 +28,6 @@ class Game {
 
   private setWinner(player: Player){
     this.winner = player
-    this.completed = true;
   }
   
   public getCurrentScore(): object{
@@ -59,11 +47,6 @@ class Game {
       this.deuce(player);
     else
       player.scorePoints();
-  }
-
-  private ensureIncompleteGame():void {
-    if(this.completed)
-      throw new CompletedGameException("The game is already completed, no more actions available")
   }
 }
 

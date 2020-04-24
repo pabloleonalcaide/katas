@@ -1,26 +1,18 @@
-class Player {
-  private points: number;
+import { Points } from './Points';
 
-  constructor(){
-    this.points = 0
+class Player {
+  private points: Points;
+
+  constructor() {
+    this.points = new Points();
   }
+
   public getPoints():number{
-    return this.points;
+    return this.points.value();
   }
 
   public scorePoints():void{
-    this.points = this.nextScore(this.points)
-  }
-
-  private nextScore(previousPoints):number{
-      let nextPoints;
-    switch (previousPoints) {
-      case 0: nextPoints = 15;break;
-      case 15: nextPoints = 30;break;
-      case 30: nextPoints = 40;break;
-      default: break;
-    }
-    return nextPoints;
+    this.points.score();
   }
 }
 

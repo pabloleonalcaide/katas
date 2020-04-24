@@ -1,5 +1,5 @@
-import {Player} from './Player'
-import { Game } from './Game';
+import {Player} from '../src/Player'
+import { Game } from '../src/Game';
 
 describe('Player Behaviour', () => {
   var player1 = new Player();
@@ -25,7 +25,6 @@ describe('Game behaviour', () => {
     game.scoreForPlayer(1)
     game.scoreForPlayer(1)
     game.scoreForPlayer(1)
-    expect(game.isCompleted()).toBe(true)
     expect(game.getWinner()).toBe(p1)
   })
 
