@@ -8,7 +8,7 @@ class Player {
   }
 
   public getPoints():number{
-    return this.points.value();
+    return this.points.value;
   }
 
   public scorePoints():void{

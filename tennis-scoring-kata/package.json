@@ -2,12 +2,11 @@
   "name": "Tennis_Scoring_Kata",
   "version": "1.0.0",
   "license": "MIT",
-  "author" : "Pablo León Alcaide",
+  "author": "Pablo León Alcaide",
   "scripts": {
     "test": "./node_modules/.bin/jest"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/jest": "23.3.2",
     "@types/node": "10.10.3",
@@ -22,7 +21,7 @@
   "jest": {
     "testEnvironment": "node",
     "roots": [
-      "<rootDir>/src"
+      "<rootDir>/test"
     ],
     "coverageReporters": [
       "json",
@@ -33,7 +32,7 @@
     "transform": {
       "^.+\\.ts?$": "ts-jest"
     },
-    "testRegex": "(\\.|/)(test)\\.(js|tsx?)$",
+    "testRegex": "(/__test__/.*|(\\.|/)(test|spec))\\.[jt]sx?$",
     "moduleFileExtensions": [
       "ts",
       "js",

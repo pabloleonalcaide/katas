@@ -1,19 +1,19 @@
 class Points {
-  private points: number;
+  private _value: number;
 
   constructor(){
-    this.points = 0;
+    this._value = 0;
   }
 
-  public value():number {
-    return this.points;
+  get value():number {
+    return this._value;
   }
 
   public score():void {
-    switch (this.points) {
-      case 0: this.points = 15;break;
-      case 15: this.points = 30;break;
-      default: this.points = 40;break;
+    switch (this.value) {
+      case 0: this._value = 15;break;
+      case 15: this._value = 30;break;
+      default: this._value = 40;break;
     }
   }
 }
