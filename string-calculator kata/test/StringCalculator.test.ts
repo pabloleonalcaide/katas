@@ -21,4 +21,9 @@ describe('StringCalculator Add method', () =>{
     it('should allow new lines between two numbes', () => {
       expect(stringCalculator.add("1,2\n3,4")).toBe(10);
     })
+
+    it('should allow to support different delimiters', () => {
+      expect(stringCalculator.add("//;\n1;2")).toBe(3);
+    })
+
 })
