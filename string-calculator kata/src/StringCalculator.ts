@@ -1,3 +1,4 @@
+import { NoNegativeNumbersAllowed } from "./NoNegativeNumbersAllowed";
 
 export class StringCalculator {
   defaultDelimiter = ",";
@@ -8,7 +9,11 @@ export class StringCalculator {
     }
     let stringArray = this.formatStringArray(numbers)
     const numberArray = stringArray.map(Number)
-    return numberArray.reduce((prev, current) => prev + current );       
+    this.ensureValidNumbers(numberArray);
+    return numberArray.reduce((prev, current) =>{
+      current = current > 1000 ? 0 : current;
+      return prev + current
+    });
   }
 
   private formatStringArray(numbers: string) {
@@ -18,9 +23,21 @@ export class StringCalculator {
     return numbers.split(delimiter);
 
   }
-  private checkDelimiter(numbers: string): string{
-    if(!numbers.startsWith("//"))
+  private checkDelimiter(numbersString: string): string{
+    if(!numbersString.startsWith("//"))
       return this.defaultDelimiter;
-    return numbers.substring(2,3)
+    return numbersString.substring(2,3)
   }
+
+  private ensureValidNumbers(numbers: Number[]):void{
+    let errors = [];
+    numbers.forEach(number => {
+      if(number < 0)
+        errors.push(number.toString());
+    })
+    if(errors.length > 0)
+      throw new NoNegativeNumbersAllowed("No Negative Numbers Allowed, received: " + errors.toString())
+      
+  }
+
 }

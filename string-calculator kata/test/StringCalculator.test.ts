@@ -1,4 +1,5 @@
 import {StringCalculator} from '../src/StringCalculator';
+import {NoNegativeNumbersAllowed } from '../src/NoNegativeNumbersAllowed';
 
 describe('StringCalculator Add method', () =>{
    const stringCalculator = new StringCalculator();
@@ -24,6 +25,17 @@ describe('StringCalculator Add method', () =>{
 
     it('should allow to support different delimiters', () => {
       expect(stringCalculator.add("//;\n1;2")).toBe(3);
+    })
+
+    it('should throw an Exception when negative numbers are provided', () => {
+      expect( 
+        () => stringCalculator.add("//;\n1;2;-3;-4")
+        ).toThrowError(NoNegativeNumbersAllowed);
+    })
+
+    it('should ignore numbers higher than 1000', () => {
+      expect(stringCalculator.add("1,2,3,1005,4")).toBe(10);
+
     })
 
 })
