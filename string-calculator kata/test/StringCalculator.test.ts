@@ -35,7 +35,11 @@ describe('StringCalculator Add method', () =>{
 
     it('should ignore numbers higher than 1000', () => {
       expect(stringCalculator.add("1,2,3,1005,4")).toBe(10);
+    })
 
+    it('should allow to support delimiters with unknown length', () => {
+      expect(stringCalculator.add("//;;;\n1;;;2")).toBe(3);
+      expect(stringCalculator.add("//***\n1***2")).toBe(3);
     })
 
 })
