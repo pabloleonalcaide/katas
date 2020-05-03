@@ -42,4 +42,12 @@ describe('StringCalculator Add method', () =>{
       expect(stringCalculator.add("//***\n1***2")).toBe(3);
     })
 
+    it('should allow to support different delimiters at the same time', () => {
+      expect(stringCalculator.add("//[*][%]\n1*2%3")).toBe(6);
+    })
+
+    it('should allow to support different delimiters with different length at the same time', () => {
+      expect(stringCalculator.add("//[**][%]\n1**2%3")).toBe(6);
+    })
+
 })
