@@ -5,6 +5,7 @@ import {
 export class StringCalculator {
 
   private defaultDelimiter = ",";
+  private CUSTOM_SEPARATOR = "0";
 
   public add(numbers: string): number {
 
@@ -21,27 +22,29 @@ export class StringCalculator {
 
   private extractNumbers(numbersString: string): number[] {
     let delimiter: string;
-    let stringArray: string[];
     if (numbersString.indexOf("[") == -1) {
       delimiter = this.checkDelimiter(numbersString);
 
     } else {
-      const stringDelimiters = numbersString.substring(numbersString.indexOf("["), numbersString.indexOf("\n"))
-        .replace(/\[/g, "").replace(/\]/g, "0");
-      const delimiters = stringDelimiters.split("0").filter(Boolean);
-      delimiters.forEach(delimiter => {
+      const stringDelimiters = this.extractEncapsulatedSeparators(numbersString);
+      const delimiters = stringDelimiters.split(this.CUSTOM_SEPARATOR).filter(Boolean);
+      delimiters.forEach(delimiter =>
         numbersString = numbersString.split(delimiter).join(this.defaultDelimiter)
-      })
+      )
       delimiter = this.defaultDelimiter;
 
     }
     numbersString = numbersString.startsWith("//") ? numbersString.substring(numbersString.indexOf("\n")) : numbersString;
     numbersString = numbersString.replace(/(\n)/gm, delimiter);
-    stringArray = numbersString.split(delimiter);
+    const stringArray = numbersString.split(delimiter);
 
     return stringArray.map(Number);
   }
 
+  private extractEncapsulatedSeparators(numbersString: string): string{
+    return numbersString.substring(numbersString.indexOf("["), numbersString.indexOf("\n"))
+    .replace(/\[/g, "").replace(/\]/g, this.CUSTOM_SEPARATOR);
+  }
   private checkDelimiter(numbersString: string): string {
     if (!numbersString.startsWith("//"))
       return this.defaultDelimiter;
@@ -49,11 +52,7 @@ export class StringCalculator {
   }
 
   private ensureValidNumbers(numbers: Number[]): void {
-    let errors = [];
-    numbers.forEach(number => {
-      if (number < 0)
-        errors.push(number.toString());
-    })
+    let errors = numbers.filter(number => number < 0);
     if (errors.length > 0)
       throw new NoNegativeNumbersAllowed("No Negative Numbers Allowed, received: " + errors.toString())
   }
