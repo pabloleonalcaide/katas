@@ -1,4 +1,5 @@
 import {Greeter} from '../src/greeting';
+import { Group } from '../src/group';
 
 describe('Greeting Kata', () => {
   const greeter = new Greeter();
@@ -19,7 +20,13 @@ describe('Greeting Kata', () => {
 
   test('Handle two names', () => {
     let expectedResponse = 'Hello, Bob and Wyde'
-    expect(greeter.greet(['Bob', 'Wyde'])).toBe(expectedResponse);
+    const group = new Group(['Bob', 'Wyde']);
+    expect(greeter.greet(group)).toBe(expectedResponse);
   })
 
+  test('Handle more than two names', () => {
+    let expectedResponse = 'Hello, Bob, Logan and Wyde'
+    const group = new Group(['Bob', 'Logan', 'Wyde']);
+    expect(greeter.greet(group)).toBe(expectedResponse);
+  })
 })
