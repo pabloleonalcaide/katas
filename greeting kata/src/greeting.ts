@@ -1,6 +1,8 @@
 class Greeter {
   public greet(toGreet: any): string{
-    return "Hello, Bob.";
+    if(toGreet == null)
+      return 'Hello, my friend.'
+    return 'Hello, Bob.';
   }
 }
 
