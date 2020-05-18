@@ -14,5 +14,8 @@ describe("Greeting Kata", () => {
 
   test('Handle shouting', () => {
     let expectedResponse = "HELLO, BOB."
+    expect(greeter.greet('BOB')).toBe(expectedResponse);
   })
+
+
 })
