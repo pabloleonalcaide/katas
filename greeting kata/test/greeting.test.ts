@@ -29,4 +29,10 @@ describe('Greeting Kata', () => {
     const group = new Group(['Bob', 'Logan', 'Wyde']);
     expect(greeter.greet(group)).toBe(expectedResponse);
   })
+
+  test('Handle mixing of normal and shouted names', () => {
+    let expectedResponse = 'Hello, Amy and Charlotte. AND HELLO BRIAN!'
+    const group = new Group(['Amy', 'BRIAN', 'Charlotte']);
+    expect(greeter.greet(group)).toBe(expectedResponse);
+  })
 })

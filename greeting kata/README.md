@@ -13,7 +13,7 @@ Source from [testdouble](https://github.com/testdouble/contributing-tests/wiki/G
 5. **Handle more than two names**
   * Handle the arbitrarily names of input. When ​name​ represents more than two names, separate them with commas and close with and Oxford command “and”. For example, when ​name​ is [“Amy”, “Brian”, “Charlotte”], then the method should return the string “Hello, Amy, Brian, and Charlotte”
 6. **Handle mixing of normal and shouted names**
-  * Allow for mixing of normal and shouted names by separating the responses into two greetings. For example, whenname​ is [“Amy”, “BRIAN”, “Charlotte”], then the method should return the string “Hello, Amy and Charlotte. ANDHELLO BRIAN!”
+  * Allow for mixing of normal and shouted names by separating the responses into two greetings. For example, whenname​ is [“Amy”, “BRIAN”, “Charlotte”], then the method should return the string “Hello, Amy and Charlotte. AND HELLO BRIAN!”
 7. **Split names with commas into separate entries**
   * If any entries in ​name​ are a string containing a comma, split it as its own input. For example, when ​name​ is [“Bob”,“Charlie, Dianne”], then the method should return the string “Hello, Bob, Charlie, and Dianne.”
 8. **Allow commas in entries to be escapes**
