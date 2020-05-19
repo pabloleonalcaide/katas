@@ -1,61 +1,69 @@
 import { Group } from './group';
 
 class Greeter {
-  DOT = '.';
-  COMA = ", "
-  HELLO = 'Hello';
-  AND = ' and ';
+  HELLO = 'Hello'
+  response = '';
 
   public greet(toGreet: any): string{
-    if(toGreet == null)
-      return this.defaultGreet();
-    if(toGreet instanceof Group)
-      return this.greetGroup(toGreet);
-    return this.greetSingle(toGreet);
+    
+    toGreet instanceof Group ? this.greetGroup(toGreet) : 
+    toGreet == null ? this.defaultGreet() : this.greetSingle(toGreet);
+  
+    return this.response;
   }
 
-private greetGroup(group: Group): string{
-    let response = this.HELLO.concat(this.COMA)
+private greetGroup(group: Group) {
+    this.response = this.response.concat(this.HELLO).concat(Separators.COMA)
     let upperCaseNames: string[] = [];
     group.people.forEach(person => {
       if(this.isUpperCase(person)){
         upperCaseNames.push(person)
       }else{
         if(!group.isFirstMember(person)){
-          response = group.isLastMember(person) ? response.concat(this.AND) : response.concat(this.COMA);
+          this.addSeparator(group,person);
         }
-      response = response.concat(person)
+      this.response = this.response.concat(person)
       }
     });
-    response = upperCaseNames.length > 0 ? this.addUpperCaseNames(response, new Group(upperCaseNames)) : response
-    return response;
+    if(upperCaseNames.length > 0 )
+      this.addUpperCaseNames(new Group(upperCaseNames)) 
   }
 
-  private greetSingle(person: string):string {
-    let greet = this.HELLO.concat(this.COMA).concat(person).concat(this.DOT);
-    return this.isUpperCase(person) ? greet.toUpperCase() : greet;
+  private greetSingle(person: string) {
+    let greet = this.HELLO.concat(Separators.COMA).concat(person).concat(Separators.DOT);
+    this.response = this.isUpperCase(person) ? greet.toUpperCase() : greet;
   }
 
-  private addUpperCaseNames(response: string, upperCaseNames: Group): string{
+  private addUpperCaseNames(upperCaseNames: Group) {
     
-    response = response.concat(this.DOT).concat(this.AND.toUpperCase())
+    this.response = this.response.concat(Separators.DOT).concat(Separators.AND.toUpperCase())
     
-    if (upperCaseNames.people.length !== 0){
-      response = response.concat(this.HELLO.toUpperCase()+ " ")
+      this.response = this.response.concat(this.HELLO.toUpperCase()+ " ")
       upperCaseNames.people.forEach(person => {
         if(!upperCaseNames.isFirstMember(person)){
-          response = upperCaseNames.isLastMember(person) ? response.concat(this.AND) : response.concat(this.COMA);
+          this.addSeparator(upperCaseNames, person);
         }
-      response = response.concat(person)
+      this.response = this.response.concat(person)
       })
-      response = response.concat("!")
-    } 
-    
-    return response;
+      this.response = this.response.concat("!")
   }
-  private defaultGreet = ():string => {return 'Hello, my friend.'};
+  
+  private addSeparator(group:Group, person: string){
+    this.response = group.isLastMember(person) ? this.response.concat(Separators.AND) 
+          : this.response.concat(Separators.COMA);
+  }
+  
+  private defaultGreet() {this.response = 'Hello, my friend.'};
 
-  private isUpperCase = (person: string):boolean =>{ return person.toUpperCase() == person}
+  private isUpperCase(person: string):boolean { 
+    return person.toUpperCase() === person
+  }
+}
+
+enum Separators {
+  DOT = '.',
+  COMA = ", ",
+  AND = ' and ',
 }
 
 export {Greeter}

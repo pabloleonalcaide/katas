@@ -2,7 +2,12 @@ import {Greeter} from '../src/greeting';
 import { Group } from '../src/group';
 
 describe('Greeting Kata', () => {
-  const greeter = new Greeter();
+    const greeter = new Greeter();
+    
+    beforeEach(() => {
+      greeter.response = '';
+    })
+
   test('Greet a single name', () => {
     let expectedResponse = 'Hello, Bob.'
     expect(greeter.greet('Bob')).toBe(expectedResponse);
@@ -20,19 +25,19 @@ describe('Greeting Kata', () => {
 
   test('Handle two names', () => {
     let expectedResponse = 'Hello, Bob and Wyde'
-    const group = new Group(['Bob', 'Wyde']);
+    let group = new Group(['Bob', 'Wyde']);
     expect(greeter.greet(group)).toBe(expectedResponse);
   })
 
   test('Handle more than two names', () => {
     let expectedResponse = 'Hello, Bob, Logan and Wyde'
-    const group = new Group(['Bob', 'Logan', 'Wyde']);
+    let group = new Group(['Bob', 'Logan', 'Wyde']);
     expect(greeter.greet(group)).toBe(expectedResponse);
   })
 
   test('Handle mixing of normal and shouted names', () => {
     let expectedResponse = 'Hello, Amy and Charlotte. AND HELLO BRIAN!'
-    const group = new Group(['Amy', 'BRIAN', 'Charlotte']);
+    let group = new Group(['Amy', 'BRIAN', 'Charlotte']);
     expect(greeter.greet(group)).toBe(expectedResponse);
   })
 })
