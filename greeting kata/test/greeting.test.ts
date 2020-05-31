@@ -40,4 +40,16 @@ describe('Greeting Kata', () => {
     let group = new Group(['Amy', 'BRIAN', 'Charlotte']);
     expect(greeter.greet(group)).toBe(expectedResponse);
   })
+
+  test('Split names with commas into separate entries', () => {
+    let expectedResponse = 'Hello, Bob, Charlie, and Dianne';
+    let group = new Group(['Bob','Charlie, Dianne']);
+    expect(greeter.greet(group)).toBe(expectedResponse);
+  })
+
+  test('Allow commas in entries to be escapes', () => {
+    let expectedResponse = 'Hello, Bob and Charlie, Dianne';
+    let group = new Group(['Bob', '"Charlie,Dianne"']);
+    expect(greeter.greet(group)).toBe(expectedResponse);
+  })
 })
