@@ -7,26 +7,32 @@ class Greeter {
 
   private response = '';
 
-  public greet(toGreet: any): string {
+  public greet(toGreet: string | Group): string {
 
-    toGreet instanceof Group ? this.greetGroup(toGreet) :
-      toGreet == null ? this.defaultGreet() : this.greetSingle(toGreet);
+    if(toGreet == null){ 
+      return this.defaultGreet()
+    }
+    
+    if(toGreet instanceof Group) {
+      return this.greetGroup(toGreet)
+    }
+    return this.greetSingle(toGreet);
 
-    return this.response;
   }
 
-  private defaultGreet() {
-    this.response = 'Hello, my friend.'
+  private defaultGreet():string {
+    return 'Hello, my friend.'
   };
 
 
   private greetGroup(group: Group) {
-    this.response = this.response.concat(this.HELLO).concat(Separators.COMA).concat(Separators.WHITE_SPACE)
+    this.response = `${this.response}${this.HELLO}${Separators.COMMA}${Separators.WHITE_SPACE}`
     let upperCaseNames: string[] = [];
 
     this.prepareNamesToGreet(group, upperCaseNames);
     if (upperCaseNames.length > 0)
       this.addUpperCaseNames(new Group(upperCaseNames))
+    return this.response
   }
 
   private prepareNamesToGreet(group: Group, upperCaseNames: string[]) {
@@ -36,46 +42,48 @@ class Greeter {
       }
       else {
         if (!group.isFirstMember(person)) {
-          this.addSeparator(group, person);
+          this.response = `${this.response}${this.addSeparator(group,person)}`
         }
-        this.response = this.response.concat(this.formattedPerson(person));
+        this.response = `${this.response}${this.formattedPerson(person)}`
       }
     });
   }
 
   private greetSingle(person: string) {
-    let greet = this.HELLO.concat(Separators.COMA).concat(Separators.WHITE_SPACE).concat(person).concat(Separators.DOT);
-    this.response = this.isUpperCase(person) ? greet.toUpperCase() : greet;
+    let greet = `${this.HELLO}${Separators.COMMA}${Separators.WHITE_SPACE}${person}${Separators.DOT}`
+    return this.isUpperCase(person) ? greet.toUpperCase() : greet;
   }
 
   private addUpperCaseNames(upperCaseNames: Group) {
 
-    this.response = this.response.concat(Separators.DOT).concat(Separators.AND.toUpperCase())
-
-    this.response = this.response.concat(this.HELLO.toUpperCase()).concat(Separators.WHITE_SPACE)
+    this.response = `${this.response}${Separators.DOT}${Separators.AND.toUpperCase()}`
+    this.response = `${this.response}${this.HELLO.toUpperCase()}${Separators.WHITE_SPACE}`
     upperCaseNames.people.forEach(person => {
       if (!upperCaseNames.isFirstMember(person)) {
-        this.addSeparator(upperCaseNames, person);
+        this.response = `${this.response}${this.addSeparator(upperCaseNames,person)}`
       }
-      this.response = this.response.concat(person)
+      this.response = `${this.response}${person}`
     })
-    this.response = this.response.concat("!")
+    this.response = `${this.response}${'!'}`
   }
 
   private addSeparator(group: Group, person: string) {
-
-    this.response = (group.isLastMember(person) && (person.includes(this.DOUBLE_QUOTE) || !person.includes(Separators.COMA))) ? this.response.concat(Separators.AND) :
-      this.response.concat(Separators.COMA).concat(Separators.WHITE_SPACE);
+    const isLastMember = group.isLastMember(person)
+    const hasDoubleQuotes = person.includes(this.DOUBLE_QUOTE)
+    const DoesNotHaveCommas = !person.includes(Separators.COMMA)
+    return ( isLastMember && (hasDoubleQuotes || DoesNotHaveCommas )) 
+      ? `${Separators.AND}`
+      : `${Separators.COMMA}${Separators.WHITE_SPACE}`
   }
 
   private formattedPerson(person: string): string {
-    if (person.indexOf(this.DOUBLE_QUOTE) != -1 && person.indexOf(Separators.COMA) != -1){
+    if (person.indexOf(this.DOUBLE_QUOTE) != -1 && person.indexOf(Separators.COMMA) != -1){
       person = person.replace(this.DOUBLE_QUOTE_REGEXP, '');
-      let subgroup = person.split(Separators.COMA)
-      person = subgroup[0].trim().concat(Separators.COMA).concat(Separators.WHITE_SPACE).concat(subgroup[1].trim())
-    }else if (person.indexOf(Separators.COMA) != -1) {
-      let subgroup = person.split(Separators.COMA)
-      person = subgroup[0].trim().concat(Separators.COMA).concat(Separators.WHITE_SPACE).concat(Separators.TRIMED_AND).concat(Separators.WHITE_SPACE).concat(subgroup[1].trim());
+      let subgroup = person.split(Separators.COMMA)
+      person = subgroup[0].trim().concat(Separators.COMMA).concat(Separators.WHITE_SPACE).concat(subgroup[1].trim())
+    }else if (person.indexOf(Separators.COMMA) != -1) {
+      let subgroup = person.split(Separators.COMMA)
+      person = subgroup[0].trim().concat(Separators.COMMA).concat(Separators.WHITE_SPACE).concat(Separators.TRIMED_AND).concat(Separators.WHITE_SPACE).concat(subgroup[1].trim());
     }
     return person;
   }
@@ -87,7 +95,7 @@ class Greeter {
 
 enum Separators {
   DOT = '.',
-  COMA = ",",
+  COMMA = ",",
   AND = ' and ',
   TRIMED_AND = 'and',
   WHITE_SPACE = ' '
