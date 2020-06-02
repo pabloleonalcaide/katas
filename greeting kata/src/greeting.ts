@@ -5,8 +5,6 @@ class Greeter {
   private readonly DOUBLE_QUOTE = '"';
   private readonly DOUBLE_QUOTE_REGEXP = /"/g;
 
-  private response = '';
-
   public greet(toGreet: string | Group): string {
 
     if(toGreet == null){ 
@@ -26,27 +24,29 @@ class Greeter {
 
 
   private greetGroup(group: Group) {
-    this.response = `${this.response}${this.HELLO}${Separators.COMMA}${Separators.WHITE_SPACE}`
+    let content = `${this.HELLO}${Separators.COMMA}${Separators.WHITE_SPACE}`
     let upperCaseNames: string[] = [];
 
-    this.prepareNamesToGreet(group, upperCaseNames);
+    content = `${content}${this.addPreparedNames(group, upperCaseNames)}`
     if (upperCaseNames.length > 0)
-      this.addUpperCaseNames(new Group(upperCaseNames))
-    return this.response
+      content = `${content}${this.addUpperCaseNames(new Group(upperCaseNames))}`
+    return content
   }
 
-  private prepareNamesToGreet(group: Group, upperCaseNames: string[]) {
+  private addPreparedNames(group: Group, upperCaseNames: string[]):string {
+    let content = '';
     group.people.forEach(person => {
       if (this.isUpperCase(person)) {
         upperCaseNames.push(person);
       }
       else {
         if (!group.isFirstMember(person)) {
-          this.response = `${this.response}${this.addSeparator(group,person)}`
+          content = `${content}${this.addSeparator(group,person)}`
         }
-        this.response = `${this.response}${this.formattedPerson(person)}`
+        content = `${content}${this.formattedPerson(person)}`
       }
     });
+    return content
   }
 
   private greetSingle(person: string) {
@@ -55,16 +55,16 @@ class Greeter {
   }
 
   private addUpperCaseNames(upperCaseNames: Group) {
-
-    this.response = `${this.response}${Separators.DOT}${Separators.AND.toUpperCase()}`
-    this.response = `${this.response}${this.HELLO.toUpperCase()}${Separators.WHITE_SPACE}`
+    let content = ''
+    content = `${content}${Separators.DOT}${Separators.AND.toUpperCase()}`
+    content = `${content}${this.HELLO.toUpperCase()}${Separators.WHITE_SPACE}`
     upperCaseNames.people.forEach(person => {
       if (!upperCaseNames.isFirstMember(person)) {
-        this.response = `${this.response}${this.addSeparator(upperCaseNames,person)}`
+        content = `${content}${this.addSeparator(upperCaseNames,person)}`
       }
-      this.response = `${this.response}${person}`
+      content = `${content}${person}`
     })
-    this.response = `${this.response}${'!'}`
+    return `${content}${'!'}`
   }
 
   private addSeparator(group: Group, person: string) {
@@ -89,9 +89,8 @@ class Greeter {
     return person;
   }
 
-  private isUpperCase(person: string): boolean {
-    return person.toUpperCase() === person
-  }
+  private isUpperCase = (person: string) =>  person.toUpperCase() === person
+  
 }
 
 enum Separators {
