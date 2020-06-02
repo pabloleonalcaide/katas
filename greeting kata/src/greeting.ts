@@ -77,13 +77,14 @@ class Greeter {
   }
 
   private formattedPerson(person: string): string {
+    
     if (person.indexOf(this.DOUBLE_QUOTE) != -1 && person.indexOf(Separators.COMMA) != -1){
       person = person.replace(this.DOUBLE_QUOTE_REGEXP, '');
       let subgroup = person.split(Separators.COMMA)
-      person = subgroup[0].trim().concat(Separators.COMMA).concat(Separators.WHITE_SPACE).concat(subgroup[1].trim())
+      return `${subgroup[0].trim()}${Separators.COMMA}${Separators.WHITE_SPACE}${subgroup[1].trim()}`;
     }else if (person.indexOf(Separators.COMMA) != -1) {
       let subgroup = person.split(Separators.COMMA)
-      person = subgroup[0].trim().concat(Separators.COMMA).concat(Separators.WHITE_SPACE).concat(Separators.TRIMED_AND).concat(Separators.WHITE_SPACE).concat(subgroup[1].trim());
+      return `${subgroup[0].trim()}${Separators.COMMA}${Separators.WHITE_SPACE}${Separators.TRIMED_AND}${Separators.WHITE_SPACE}${subgroup[1].trim()}` 
     }
     return person;
   }
