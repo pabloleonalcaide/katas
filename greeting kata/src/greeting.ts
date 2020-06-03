@@ -25,26 +25,24 @@ class Greeter {
 
   private greetGroup(group: Group) {
     let content = `${this.HELLO}${Separators.COMMA}${Separators.WHITE_SPACE}`
-    let upperCaseNames: string[] = [];
 
-    content = `${content}${this.addPreparedNames(group, upperCaseNames)}`
+    content = `${content}${this.addLowerCaseNames(group)}`
+    const upperCaseNames = group.people.filter(person => this.isUpperCase(person))
     if (upperCaseNames.length > 0)
       content = `${content}${this.addUpperCaseNames(new Group(upperCaseNames))}`
     return content
   }
 
-  private addPreparedNames(group: Group, upperCaseNames: string[]):string {
+  private addLowerCaseNames(group: Group):string {
     let content = '';
-    group.people.forEach(person => {
-      if (this.isUpperCase(person)) {
-        upperCaseNames.push(person);
-      }
-      else {
+    const lowerCaseNames = group.people.filter(person =>  !this.isUpperCase(person))
+    lowerCaseNames.forEach(person => {
+
         if (!group.isFirstMember(person)) {
           content = `${content}${this.addSeparator(group,person)}`
         }
         content = `${content}${this.formattedPerson(person)}`
-      }
+      
     });
     return content
   }
