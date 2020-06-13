@@ -3,12 +3,8 @@ import { Group } from '../src/group';
 
 describe('Greeting Kata', () => {
     const greeter = new Greeter();
-    
-    beforeEach(() => {
-      greeter.response = '';
-    })
 
-  test('Greet a single name', () => {
+  test('Greet a single name', () => { 
     let expectedResponse = 'Hello, Bob.'
     expect(greeter.greet('Bob')).toBe(expectedResponse);
   })

@@ -18,10 +18,7 @@ class Greeter {
 
   }
 
-  private defaultGreet():string {
-    return 'Hello, my friend.'
-  };
-
+   defaultGreet = ():string => 'Hello, my friend.'
 
   private greetGroup(group: Group) {
     let content = `${this.HELLO}${Separators.COMMA}${Separators.WHITE_SPACE}${this.greetLowerCaseNames(group)}`
@@ -39,7 +36,7 @@ class Greeter {
         if (!group.isFirstMember(curr)) {
           content = `${content}${this.getSeparator(group,curr)}`
         }
-        content = `${content}${this.formattedPerson(curr)}`
+        content = `${content}${this.formatNames(curr)}`
 
         return content
       },'')
@@ -75,7 +72,7 @@ class Greeter {
       : `${Separators.COMMA}${Separators.WHITE_SPACE}`
   }
 
-  private formattedPerson(person: string): string {
+  private formatNames(person: string): string {
 
     if (person.indexOf(this.DOUBLE_QUOTE) != -1 && person.indexOf(Separators.COMMA) != -1){
       person = person.replace(this.DOUBLE_QUOTE_REGEXP, '');
