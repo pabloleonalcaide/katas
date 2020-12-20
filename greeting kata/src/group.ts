@@ -7,10 +7,10 @@ export class Group {
   }
 
   public isLastMember(person: string):boolean{
-    return this.people[this.people.length -1] === person
+    return this.people[this.people.length -1] == person
   }
   
   public isFirstMember(person: string):boolean{
-    return this.people[0] === person
+    return this.people[0] == person
   }
 }
