@@ -15,9 +15,10 @@ class Greeter {
       return this.greetGroup(toGreet)
     }
     return this.greetSingle(toGreet);
+
   }
 
-   defaultGreet = (): string => 'Hello, my friend.'
+   defaultGreet = ():string => 'Hello, my friend.'
 
   private greetGroup(group: Group) {
     let content = `${this.HELLO}${Separators.COMMA}${Separators.WHITE_SPACE}${this.greetLowerCaseNames(group)}`
@@ -36,6 +37,7 @@ class Greeter {
           content = `${content}${this.getSeparator(group,curr)}`
         }
         content = `${content}${this.formatNames(curr)}`
+
         return content
       },'')
     return content
