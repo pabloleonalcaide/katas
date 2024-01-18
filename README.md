@@ -1,7 +1,7 @@
 # Katas! 🥋
 
 Some code katas to practice and improve skills over TDD, Refactoring, SOLID, Clean Code... (See more detail inside each exercise)  
-Most of these exercises belongs to the [Kata-log](https://www.retrogames.cz/play_307-Genesis.php) website
+Most of these exercises belongs to the [Kata-log](https://kata-log.rocks/) website
 
 ## Help me improve! 👩‍🏫
 
